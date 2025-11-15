@@ -1,0 +1,111 @@
+{% extends "base.html"%} {% block title%} About {% endblock %} {% block
+extra_css %}
+
+<link rel="stylesheet" href="../static/css/about.css">
+
+{%endblock %}
+
+{% block favicon %}
+<link rel="icon" type="image/png" href="../static/img/favicon/about/favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="../static/img/favicon/about/favicon.svg" />
+<link rel="shortcut icon" href="../static/img/favicon/about/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="../static/img/favicon/about/apple-touch-icon.png" />
+<link rel="manifest" href="../static/img/favicon/about/site.webmanifest" />
+{% endblock favicon %}
+
+{% block content%}
+
+<section id="about" class="about py-5">
+  <div class="container" data-aos="fade-up">
+    <div class="row gx-5">
+
+      <div class="col-lg-5 text-center">
+        <img src="{{ url_for('static', filename='img/about_page_img.avif') }}" class="img-fluid rounded shadow mb-5"
+          alt="Disease Prediction Project" />
+        <img src="{{ url_for('static', filename='img/about_page_img_2.jpeg') }}" class="img-fluid rounded shadow mb-5"
+          alt="Disease Prediction Project" />
+        <img src="{{ url_for('static', filename='img/about_page_img_3.webp') }}" class="img-fluid rounded shadow mb-5"
+          alt="Disease Prediction Project" />
+        <img src="{{ url_for('static', filename='img/about_page_img_4.webp') }}" class="img-fluid rounded shadow mb-5"
+          alt="Disease Prediction Project" />
+      </div>
+
+
+      <div class="col-lg-7 pt-4 pt-lg-0 content">
+        <h2 class="fw-bold mb-3">About This Project</h2>
+        <p class="fst-italic text-muted">
+          Developed by <strong>Your Full Name</strong>, this project
+          leverages both Machine Learning and AI technologies to provide
+          accurate and instant disease predictions.
+        </p>
+
+        <h4 class="fw-semibold mt-4">🔍 Two Powerful Prediction Methods</h4>
+        <ul>
+          <li>
+            <strong>1. ML-Based Prediction:</strong> Built using a pre-processed
+            Kaggle dataset with multiple CSV files (<em>training, description, symptoms, diets, medications,
+              precautions,
+              workout</em>). Implemented with
+            <strong>Support Vector Machine (SVM)</strong> for accuracy. Input
+            includes
+            <strong>Name, Age, Gender, and Symptoms</strong> (checkbox-based to
+            avoid errors). Output is presented as a professional hospital-style
+            report with disease details, description, recommended diet,
+            medications, precautions, and workout tips. Users can also
+            <strong>download the report</strong>.
+          </li>
+          <li>
+            <strong>2. AI-Powered Prediction:</strong> Uses the
+            <strong>Gemini API</strong> for intelligent, conversational disease
+            diagnosis. Generates a detailed medical report including the
+            predicted disease and medical advice, also downloadable in a
+            hospital-style format.
+          </li>
+        </ul>
+
+        <h4 class="fw-semibold mt-4">💬 AI Doctor Chatbot</h4>
+        <p>
+          Integrated AI chatbot powered by the Gemini API that allows users to
+          have an interactive consultation similar to talking to a doctor.
+          Provides medical guidance, answers health-related queries, and
+          recommends preventive measures.
+        </p>
+
+        <h4 class="fw-semibold mt-4">📂 Medical Report Storage</h4>
+        <p>
+          The system includes a secure <strong>Medical Report Storage</strong> feature
+          where users can save their generated reports for future access.
+        </p>
+        <ul>
+          <li>🔒 Reports are stored securely with user authentication.</li>
+          <li>📑 Users can view their past reports anytime from their profile.</li>
+          <li>⬇ Reports can be downloaded or printed in a professional hospital-style format.</li>
+          <li>📊 Acts as a digital health record for monitoring health history.</li>
+        </ul>
+
+
+        <h4 class="fw-semibold mt-4">⚙ Technologies Used</h4>
+        <ul>
+          <li>Python (Flask Framework)</li>
+          <li>HTML, CSS, JavaScript, Bootstrap</li>
+          <li>Machine Learning with SVM</li>
+          <li>Gemini AI API for predictions and chatbot</li>
+          <li>Pre-processed Kaggle Dataset</li>
+        </ul>
+
+        <h4 class="fw-semibold mt-4">🎯 Project Goal</h4>
+        <p>
+          The main aim of this project is to make disease prediction faster,
+          more accessible, and reliable for users, without replacing
+          professional medical advice. It combines the analytical power of ML
+          models with conversational AI for better decision support in
+          healthcare.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %} {% block extra_js %}
+<script src=""></script>
+{% endblock %}

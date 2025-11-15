@@ -1,0 +1,37 @@
+/* File: profile.css */
+
+body {
+  background-color: var(--primary-bg); /* Use theme background */
+}
+
+.profile-card {
+  border-radius: 1rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--card-border);
+  background-color: var(--card-bg); /* Use theme card background */
+}
+
+.form-control:focus {
+  box-shadow: 0 0 0 0.25rem var(--input-focus-shadow); /* Use theme focus glow */
+}
+
+.danger-zone {
+  border: 2px solid var(--danger-zone-border);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  background-color: var(--danger-zone-bg);
+}
+
+.input-group-text {
+  background-color: var(--input-group-bg);
+  border-right: 0;
+  border-color: var(--input-border); 
+}
+
+.form-control {
+  border-left: 0;
+}
+
+.form-control:focus {
+  border-left: 1px solid var(--border-color); 
+}

@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block title %} Profile Settings {% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, msg in messages %}
+            <div class="alert alert-{{ category }} alert-dismissible fade show rounded-3 shadow-sm" role="alert">
+              <i class="bi bi-info-circle-fill me-2"></i> {{ msg }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+
+      <div class="card profile-card">
+        <div class="card-body p-4 p-md-5">
+          <h2 class="card-title text-center mb-4">👤 Account Settings</h2>
+
+          <form method="POST">
+            <h5 class="mb-3"><i class="bi bi-person-circle me-2"></i>Profile Information</h5>
+            <div class="mb-4">
+              <label for="username" class="form-label">Username</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-person"></i></span>
+                <input type="text" class="form-control" id="username" name="username" required value="{{ user.username }}">
+              </div>
+            </div>
+
+            <hr class="my-4">
+
+            <h5 class="mb-3"><i class="bi bi-shield-lock-fill me-2"></i>Change Password</h5>
+            <div class="mb-3">
+              <label for="old_password" class="form-label">Old Password</label>
+              <div class="input-group">
+                  <span class="input-group-text"><i class="bi bi-key"></i></span>
+                  <input type="password" class="form-control" required id="old_password" name="old_password" placeholder="Enter your current password">
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="new_password" class="form-label">New Password</label>
+               <div class="input-group">
+                  <span class="input-group-text"><i class="bi bi-key-fill"></i></span>
+                  <input type="password" class="form-control" required id="new_password" name="new_password" placeholder="Enter a strong new password">
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="confirm_password" class="form-label">Confirm New Password</label>
+              <div class="input-group">
+                  <span class="input-group-text"><i class="bi bi-key-fill"></i></span>
+                  <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirm your new password">
+              </div>
+            </div>
+
+            <div class="d-grid mt-4">
+              <button type="submit" class="btn btn-primary btn-lg"><i class="bi bi-check-circle me-2"></i>Save Changes</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="danger-zone mt-5">
+        <h5 class="text-danger fw-bold"><i class="bi bi-exclamation-triangle-fill me-2"></i>Danger Zone</h5>
+        <p class="text-muted">Once you delete your account, there is no going back. Please be certain.</p>
+        <form method="POST" action="{{ url_for('delete_account') }}"
+          onsubmit="return confirm('⚠️ Are you absolutely sure you want to delete your account? This action cannot be undone.');">
+          <button type="submit" class="btn btn-danger"><i class="bi bi-trash3 me-2"></i>Delete My Account</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}

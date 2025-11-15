@@ -1,0 +1,202 @@
+/* File: static/css/theme.css */
+/* This file ONLY defines the colors for our entire site. */
+
+/* Light Theme (Default) */
+:root {
+  /* --- General Site Colors --- */
+  --primary-bg: #f8f9fa;
+  --secondary-bg: #ffffff;
+  --card-bg: #ffffff;
+  --card-border: #dee2e6;
+  --primary-text: #212529;
+  --secondary-text: #6c757d;
+  --border-color: #dee2e6;
+  --link-color: #0d6efd;
+  --gradient-start: #e3ffe7;
+  --gradient-end: #d9e7ff;
+  
+  /* --- Navbar & Accent Colors --- */
+  --accent-color: #ffeb3b;
+  --accent-glow: rgba(255, 235, 59, 0.7);
+  --nav-hover-bg: rgba(255, 255, 255, 0.15);
+  --nav-active-bg: rgba(255, 255, 255, 0.2);
+  --nav-active-text: #343a40;
+
+  /* --- ML Predict Page Specific Colors --- */
+  --text-danger: #dc3545;
+  --text-highlight: #e74c3c;
+  --form-bg: #ffffff;
+  --form-shadow: rgba(0, 0, 0, 0.1);
+  --form-heading: #0077b6;
+  --input-border: #ccc;
+  --input-focus-border: #0077b6;
+  --input-focus-shadow: rgba(0, 119, 182, 0.4);
+  --button-primary-bg: #0077b6;
+  --button-primary-hover-bg: #005f8d;
+  --button-secondary-bg: #2980b9;
+  --button-secondary-hover-bg: #1f6391;
+  --button-text: #ffffff;
+  --report-bg: #ffffff;
+  --report-border: #ccc;
+  --report-shadow: rgba(0, 0, 0, 0.6);
+  --report-header-border: #3498db;
+  --report-header-text: #2c3e50;
+  --report-section-bg: #3498db;
+  --report-section-text: #ffffff;
+  --info-container-bg: linear-gradient(135deg, #f8fbff, #ffffff);
+  --info-card-bg: #ffffff;
+  --info-card-border: #e0e9fa;
+  --info-card-hover-shadow: rgba(0, 87, 217, 0.15);
+  --info-heading: #0057d9;
+  --info-text: #555;
+  --info-disclaimer-bg: #fff4f4;
+  --info-disclaimer-border: #f5bcbc;
+  --info-disclaimer-text: #b30000;
+  
+  /* --- AI Predict Page --- */
+  --ai-theme-color: #007b5e;
+  --ai-intro-bg: linear-gradient(135deg, #f5f7fa, #e4f0ff);
+  --ai-feature-card-border: #dce6f7;
+  --ai-feature-card-shadow: rgba(0, 87, 217, 0.08);
+  --ai-feature-card-hover-shadow: rgba(0, 87, 217, 0.15);
+  --ai-steps-list-item-bg: #f9f9f9;
+  --ai-steps-counter-bg: #4facfe;
+  --ai-steps-counter-text: #fff;
+  --ai-tips-bg: linear-gradient(135deg, #eef6ff, #ffffff);
+  --ai-tips-border: #dbe7ff;
+
+  /* --- Chatbot Page --- */
+  --chat-wrapper-bg: #f4f8fb;
+  --chat-header-bg: #2a9d8f;
+  --chat-header-text: #ffffff;
+  --chat-box-bg: #fefefe;
+  --user-message-bg: #1976d2;
+  --user-message-text: #ffffff;
+  --bot-message-bg: #e0f7fa;
+  --bot-message-text: #004d40;
+  --chat-input-bg: #ffffff;
+  --chat-input-field-bg: #f0f0f0;
+  --chat-send-btn-bg: #2a9d8f;
+  --chat-send-btn-hover-bg: #21867a;
+  --chatbot-hero-bg: linear-gradient(135deg, #00c6ff, #0072ff);
+  --chatbot-card-bg: #f4f7fb;
+  --chatbot-card-title: #2575fc;
+  --chatbot-step-bg: #e8f0ff;
+  --chatbot-tip-bg: #f9f9f9;
+  --chatbot-hover-shadow: rgba(0, 114, 255, 0.25);
+
+  /* --- Storage Page --- */
+  --storage-info-bg: linear-gradient(135deg, #e6f9f3, #ffffff);
+  --storage-icon-bg: #007b5e;
+  --storage-icon-text: #ffffff;
+  --storage-icon-shadow: rgba(0, 123, 94, 0.3);
+  --storage-card-hover-shadow: rgba(0, 0, 0, 0.15);
+  
+  /* --- Contact Page --- */
+  --contact-info-bg: #f9fdfb;
+
+  /* --- NEW: Profile Page --- */
+  --danger-zone-bg: #fff6f6;
+  --danger-zone-border: #dc3545;
+  --input-group-bg: #e9ecef;
+}
+
+/* Dark Theme Overrides */
+[data-bs-theme="dark"] {
+  /* --- General Site Colors --- */
+  --primary-bg: #121212;
+  --secondary-bg: #1e1e1e;
+  --card-bg: #2a2a2a;
+  --card-border: #444;
+  --primary-text: #e0e0e0;
+  --secondary-text: #a0a0a0;
+  --border-color: #495057;
+  --link-color: #6ea8fe;
+  --gradient-start: #1d2b34;
+  --gradient-end: #2c2a3e;
+
+  /* --- Navbar & Accent Colors --- */
+  --accent-color: #ffeb3b;
+  --accent-glow: rgba(255, 235, 59, 0.6);
+  --nav-hover-bg: rgba(0, 0, 0, 0.2);
+  --nav-active-bg: rgba(0, 0, 0, 0.25);
+  --nav-active-text: #ffffff;
+  
+  /* --- ML Predict Page Dark Colors --- */
+  --text-danger: #ff7b7b;
+  --text-highlight: #ff8a80;
+  --form-bg: #2c3e50;
+  --form-shadow: rgba(0, 0, 0, 0.2);
+  --form-heading: #90caf9;
+  --input-border: #546e7a;
+  --input-focus-border: #90caf9;
+  --input-focus-shadow: rgba(144, 202, 249, 0.4);
+  --button-primary-bg: #90caf9;
+  --button-primary-hover-bg: #64b5f6;
+  --button-secondary-bg: #64b5f6;
+  --button-secondary-hover-bg: #42a5f5;
+  --button-text: #121212;
+  --report-bg: #263238;
+  --report-border: #546e7a;
+  --report-shadow: rgba(0, 0, 0, 0.8);
+  --report-header-border: #64b5f6;
+  --report-header-text: #eceff1;
+  --report-section-bg: #455a64;
+  --report-section-text: #eceff1;
+  --info-container-bg: linear-gradient(135deg, #1f2c38, #263238);
+  --info-card-bg: #2c3e50;
+  --info-card-border: #455a64;
+  --info-card-hover-shadow: rgba(144, 202, 249, 0.15);
+  --info-heading: #90caf9;
+  --info-text: #b0bec5;
+  --info-disclaimer-bg: #5c2323;
+  --info-disclaimer-border: #a14d4d;
+  --info-disclaimer-text: #ffcdd2;
+  
+  /* --- AI Predict Page --- */
+  --ai-theme-color: #48c9b0;
+  --ai-intro-bg: linear-gradient(135deg, #1f2c38, #263238);
+  --ai-feature-card-border: #455a64;
+  --ai-feature-card-shadow: rgba(0, 0, 0, 0.2);
+  --ai-feature-card-hover-shadow: rgba(144, 202, 249, 0.15);
+  --ai-steps-list-item-bg: #37474f;
+  --ai-steps-counter-bg: #64b5f6;
+  --ai-steps-counter-text: #121212;
+  --ai-tips-bg: linear-gradient(135deg, #2c3e50, #263238);
+  --ai-tips-border: #455a64;
+
+  /* --- Chatbot Page --- */
+  --chat-wrapper-bg: #2a2a2a;
+  --chat-header-bg: #48c9b0;
+  --chat-header-text: #121212;
+  --chat-box-bg: #1e1e1e;
+  --user-message-bg: #64b5f6;
+  --user-message-text: #121212;
+  --bot-message-bg: #37474f;
+  --bot-message-text: #e0e0e0;
+  --chat-input-bg: #2a2a2a;
+  --chat-input-field-bg: #3c3c3c;
+  --chat-send-btn-bg: #48c9b0;
+  --chat-send-btn-hover-bg: #26a69a;
+  --chatbot-hero-bg: linear-gradient(135deg, #42a5f5, #1e88e5);
+  --chatbot-card-bg: #2c3e50;
+  --chatbot-card-title: #90caf9;
+  --chatbot-step-bg: #37474f;
+  --chatbot-tip-bg: #37474f;
+  --chatbot-hover-shadow: rgba(144, 202, 249, 0.25);
+
+  /* --- Storage Page --- */
+  --storage-info-bg: linear-gradient(135deg, #1f3d35, #1e1e1e);
+  --storage-icon-bg: var(--ai-theme-color);
+  --storage-icon-text: #121212;
+  --storage-icon-shadow: rgba(72, 201, 176, 0.3);
+  --storage-card-hover-shadow: rgba(0, 0, 0, 0.25);
+  
+  /* --- Contact Page --- */
+  --contact-info-bg: #203932;
+
+  /* --- NEW: Profile Page --- */
+  --danger-zone-bg: #5c2323;
+  --danger-zone-border: #ff7b7b;
+  --input-group-bg: #37474f;
+}

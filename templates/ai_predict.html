@@ -1,0 +1,243 @@
+{% extends "base.html" %} {% block title%} Ai Predict {% endblock %} {% block
+extra_css %}
+
+
+
+<link rel="stylesheet" href="../static/css/ai_prediction.css" />
+{%endblock %}
+{% block favicon %}
+<link rel="icon" type="image/png" href="../static/img/favicon/ai_predict/favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="../static/img/favicon/ai_predict/favicon.svg" />
+<link rel="shortcut icon" href="../static/img/favicon/ai_predict/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="../static/img/favicon/ai_predict/apple-touch-icon.png" />
+<link rel="manifest" href="../static/img/favicon/ai_predict/site.webmanifest" />
+{% endblock favicon %}
+{% block content %}
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1100">
+  <div id="report-toast" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive"
+    aria-atomic="true">
+    <div class="d-flex">
+      <div class="toast-body">
+        ✅ Report generated! Scroll down to view.
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+        aria-label="Close"></button>
+    </div>
+  </div>
+</div>
+<!-- ===== AI Prediction Top Section ===== -->
+<div class="ai-intro">
+  <h1>🤖 AI-Powered Disease Prediction</h1>
+  <p class="tagline">
+    Harnessing Artificial Intelligence for faster and smarter health insights.
+  </p>
+
+  <div class="ai-features">
+    <div class="feature-card">
+      <h3>🤖 Gemini-Powered</h3>
+      <p>Predictions generated using Google’s Gemini model.</p>
+    </div>
+
+    <div class="feature-card">
+      <h3>⚡ Instant Results</h3>
+      <p>Get quick predictions based on your symptoms.</p>
+    </div>
+    <div class="feature-card">
+      <h3>🧑‍⚕️ Doctor Guidance</h3>
+      <p>AI suggestions, not a replacement for doctors.</p>
+    </div>
+    <div class="feature-card">
+      <h3>🔒 Privacy First</h3>
+      <p>Your data stays secure and confidential.</p>
+    </div>
+  </div>
+
+  <div class="ai-steps">
+    <h2>⚙️ How It Works</h2>
+    <ol>
+      <li>
+        <strong>Enter your symptoms</strong> <br>
+        Provide details about how you feel in the form below.
+      </li>
+      <li>
+        <strong>AI analyzes and predicts</strong> <br>
+        Our smart model processes your data using advanced algorithms.
+      </li>
+      <li>
+        <strong>Receive possible causes & advice</strong> <br>
+        Get a detailed report with potential conditions and next steps.
+      </li>
+    </ol>
+  </div>
+
+
+  <!-- ===== AI Tips Section ===== -->
+  <div class="ai-tips">
+    <h2>💡 AI Usage Tips</h2>
+    <ul>
+      <li>🔒 Always keep your medical data private and secure</li>
+      <li>👨‍⚕️ Use AI predictions as guidance, not a final diagnosis</li>
+      <li>📊 Double-check AI results with reliable medical sources</li>
+      <li>⚠️ Consult a doctor for serious health concerns</li>
+      <li>🌍 Stay updated with latest AI healthcare improvements</li>
+    </ul>
+  </div>
+
+
+  <div class="ai-disclaimer">
+    ⚠ <strong>Disclaimer:</strong> This AI tool provides predictions for
+    educational purposes only. Always consult a doctor for medical advice.
+  </div>
+</div>
+
+
+
+<div class="container mt-4">
+  <!-- <h2 class="text-primary mb-4 text-center">AI Disease Prediction</h2> -->
+
+  <!-- Prediction Form -->
+
+  <form method="POST" class="card p-4 shadow" id="myForm" style="max-width:900px; margin:0 auto;">
+    <div class="mb-3">
+      <label class="form-label" for="pName">Patient Name:</label>
+      <input type="text" name="name" class="form-control" placeholder="Enter your full name" id="pName" required />
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label" for="pAge">Age:</label>
+      <input type="number" name="age" class="form-control" placeholder="Enter your age" id="pAge" required />
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label" for="pGender">Gender:</label>
+      <select name="gender" class="form-select" id="pGender" required>
+        <option value="">Select gender</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+        <option value="Other">Other</option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label" for="pSymptoms">Symptoms</label>
+      <textarea name="symptoms" class="form-control" rows="3" placeholder="Describe your problem or Enter symptoms"
+        id="pSymptoms" required></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary" id="predictBtn">Predict</button>
+    <div id="loading" class="text-primary mt-2" style="display:none;">⏳ Analyzing symptoms...</div>
+    <div id="errorBox" class="text-danger"></div>
+    <div id="resultBox"></div>
+
+
+
+  </form>
+  <!-- Where report will appear -->
+  <div id="resultBox" class="mt-4"></div>
+
+
+
+
+  <!-- start code for report -->
+
+  {% if result %}
+  <div id="report" class="medical-report">
+    <div class="report-header">
+      <h2>🩺 AI Medical Report</h2>
+      <p><strong>Generated on:</strong> {{ report_time }}</p>
+    </div>
+
+    <div class="report-section">
+      <p><strong>Patient Name:</strong><span id="pename">{{ result.patient_name }}</span> </p>
+      <p><strong>Predicted Disease:</strong> {{ result.predicted_disease }}</p>
+    </div>
+
+    {% if result.possible_causes %}
+    <div class="report-section">
+      <h4>Possible Causes</h4>
+      <ul>
+        {% for cause in result.possible_causes %}
+        <li>{{ cause }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %} {% if result.medical_advice %}
+    <div class="report-section">
+      <h4>Medical Advice</h4>
+      <ul>
+        {% for med in result.medical_advice %}
+        <li>{{ med }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %} {% if result.additional_info %}
+    <div class="report-section">
+      <h4>Additional Info</h4>
+      <ul>
+        {% for info in result.additional_info %}
+        <li>{{ info }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %} {% if result.doctor_alerts %}
+    <div class="report-section alert-section">
+      <h4>Doctor Alerts</h4>
+      <ul>
+        {% for alert in result.doctor_alerts %}
+        <li>{{ alert }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+
+    <div class="report-footer">
+      <p class="disclaimer">
+        ⚠ <strong>Disclaimer:</strong> This is an AI-generated prediction and
+        may not be accurate. Please consult a qualified doctor for professional
+        medical advice.
+      </p>
+    </div>
+  </div>
+
+
+  <div class="text-center mt-3">
+
+    <button id="downloadPDF" class="btn btn-primary">
+      🖨️ Download PDF
+    </button>
+  </div>
+
+  {% endif %}
+
+  <!-- end code for report -->
+</div>
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+  <div id="downloadToast" 
+       class="toast align-items-center text-bg-success border-0" 
+       role="alert" 
+       aria-live="assertive" 
+       aria-atomic="true" 
+       data-bs-autohide="true" 
+       data-bs-delay="3000"> <!-- auto close after 3 sec -->
+    <div class="d-flex">
+      <div class="toast-body">
+        📂 Report downloaded successfully!
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+  </div>
+</div>
+<!-- Bootstrap 5 JS -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+  xintegrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script> -->
+<script src="{{ url_for('static', filename='js/ai_prediction.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+
+{% endblock %}
+
+
+{% block extra_js %}
+
+
+
+{% endblock %}

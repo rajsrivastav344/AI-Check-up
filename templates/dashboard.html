@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% block title %}Report Storage{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/storage.css') }}">
+{% endblock %}
+
+{% block favicon %}
+<link rel="icon" type="image/png" href="{{ url_for('static', filename='img/favicon/storage/favicon-96x96.png') }}" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='img/favicon/storage/favicon.svg') }}" />
+<link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon/storage/favicon.ico') }}" />
+<link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='img/favicon/storage/apple-touch-icon.png') }}" />
+<link rel="manifest" href="{{ url_for('static', filename='img/favicon/storage/site.webmanifest') }}" />
+{% endblock %}
+
+{% block content %}
+
+<div class="storage-info">
+  <h2>📂 Smart Health Report Storage</h2>
+  <p class="subtitle">Manage, organize, and secure your health reports with ease.</p>
+
+  <div class="info-grid">
+    <div class="info-card">
+      <div class="icon">🔒</div>
+      <h3>Secure Storage</h3>
+      <p>Your reports are safely stored with encryption and privacy protection.</p>
+    </div>
+
+    <div class="info-card">
+      <div class="icon">⚡</div>
+      <h3>Quick Access</h3>
+      <p>Retrieve reports anytime, anywhere with instant search and filters.</p>
+    </div>
+
+    <div class="info-card">
+      <div class="icon">📊</div>
+      <h3>Smart Insights</h3>
+      <p>Keep track of report history and monitor your health trends easily.</p>
+    </div>
+  </div>
+</div>
+
+<div class="container py-4">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, msg in messages %}
+      <div class="alert alert-{{ category }} alert-dismissible fade show rounded-4" role="alert">
+        {{ msg }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    {% endfor %}
+  {% endif %}
+  {% endwith %}
+
+  <div class="row g-4">
+    <!-- Upload Card -->
+    <div class="col-12 col-lg-4">
+      <div class="card shadow-sm rounded-4 h-100">
+        <div class="card-body">
+          <h5 class="card-title fw-bold">Upload Medical Report</h5>
+          <p class="text-muted small mb-3">Accepted: PDF, JPG, PNG, DOC, DOCX (max 2 MB)</p>
+
+          <form action="{{ url_for('upload') }}" method="post" id="uploadForm" enctype="multipart/form-data">
+            <div class="mb-3">
+              <input class="form-control rounded-pill" type="file" name="report" id="reportInput"
+                accept=".pdf,.png,.jpg,.jpeg,.doc,.docx">
+            </div>
+            <button class="btn btn-primary w-100 rounded-pill" type="submit">Upload</button>
+          </form>
+
+          <div id="uploadError" class="text-danger small mt-2"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Reports List -->
+    <div class="col-12 col-lg-8">
+      <div class="card shadow-sm rounded-4 h-100">
+        <div class="card-body">
+          <h5 class="card-title fw-bold mb-3">Your Reports</h5>
+
+          {% if reports %}
+          <div class="table-responsive">
+            <table class="table align-middle">
+              <thead>
+                <tr>
+                  <th>File</th>
+                  <th class="text-nowrap">Uploaded</th>
+                  <th>Size</th>
+                  <th class="text-end">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for r in reports %}
+                <tr>
+                  <td class="text-truncate" style="max-width: 260px;">{{ r.original_name }}</td>
+                  <td class="text-nowrap">{{ r.uploaded_at.strftime('%d %b %Y, %I:%M %p') }}</td>
+                  <td>{{ r.size|filesize }}</td>
+                  <td class="text-end">
+                    <a class="btn btn-sm btn-outline-primary rounded-pill" href="{{ url_for('download', report_id=r.id) }}">Download</a>
+                    <form action="{{ url_for('delete_file', report_id=r.id) }}" method="post" class="d-inline" onsubmit="return confirm('Delete this report?');">
+                      <button class="btn btn-sm btn-outline-danger rounded-pill" type="submit">Delete</button>
+                    </form>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          {% else %}
+          <div class="text-center text-muted py-4">No reports yet. Upload your first medical report!</div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+  <div id="downloadToast" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="3000">
+    <div class="d-flex">
+      <div class="toast-body">📂 File downloaded successfully!</div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+  </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/storage.js') }}"></script>
+
+{% endblock %}

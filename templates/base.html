@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <script>
+    (() => {
+      const storedTheme = localStorage.getItem('theme');
+      const getPreferredTheme = () => {
+        if (storedTheme) return storedTheme;
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      };
+      document.documentElement.setAttribute('data-bs-theme', getPreferredTheme());
+    })();
+  </script>
+
+  <title>{% block title %}My Website{% endblock %}</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/theme.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+  {% block extra_css %}{% endblock %}
+  {% block favicon %}{% endblock %}
+</head>
+
+<body>
+  <!-- Floating Icons -->
+  <img src="https://cdn-icons-png.flaticon.com/512/2966/2966486.png" class="floating-icon icon1">
+  <img src="https://cdn-icons-png.flaticon.com/512/2966/2966505.png" class="floating-icon icon2">
+  <img src="https://cdn-icons-png.flaticon.com/512/2966/2966508.png" class="floating-icon icon3">
+
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-dark shadow-sm fixed-top py-3"
+      style="background: linear-gradient(90deg, #1976d2, #42a5f5)">
+      <div class="container-fluid">
+
+        <a href="{{ url_for('home') }}" class="d-flex align-items-center text-decoration-none">
+          <img src="{{ url_for('static', filename='img.png') }}" alt="IMG" class="rounded-circle me-2" style="width: 40px; height: 40px;" />
+          <span class="fw-bold text-white fs-5">Online Health Center</span>
+        </a>
+
+        <button class="btn nav-link" id="theme-toggle"><i class="bi" id="theme-icon"></i></button>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto text-center">
+            <li class="nav-item"><a class="nav-link {% if request.endpoint=='home' %}active{% endif %}" href="{{ url_for('home') }}">🏠 Home</a></li>
+            <li class="nav-item"><a class="nav-link {% if request.endpoint=='predict' %}active{% endif %}" href="{{ url_for('predict') }}">🏥 Predict</a></li>
+            <li class="nav-item"><a class="nav-link {% if request.endpoint=='ai_predict' %}active{% endif %}" href="{{ url_for('ai_predict') }}">🤖 AI Predict</a></li>
+            <li class="nav-item"><a class="nav-link {% if request.endpoint=='chatbot_page' %}active{% endif %}" href="{{ url_for('chatbot_page') }}">💬 ChatBot</a></li>
+            <li class="nav-item"><a class="nav-link {% if request.endpoint=='dashboard' %}active{% endif %}" href="{{ url_for('dashboard') }}">📂 Storage</a></li>
+            <li class="nav-item"><a class="nav-link {% if request.endpoint=='about' %}active{% endif %}" href="{{ url_for('about') }}">ℹ️ About</a></li>
+            <li class="nav-item"><a class="nav-link {% if request.endpoint=='contact' %}active{% endif %}" href="{{ url_for('contact') }}">📞 Contact</a></li>
+          </ul>
+
+          <div class="d-flex align-items-center justify-content-center mt-3 mt-lg-0 ms-lg-3 gap-2">
+            {% if user %}
+              <span class="text-white small d-flex align-items-center gap-1">
+                👨‍💼 Hi, <a href="{{ url_for('profile') }}" style="text-decoration:none; color:antiquewhite;"><strong>{{ user.username }}</strong></a>
+              </span>
+              <a href="{{ url_for('logout') }}" class="btn btn-light btn-sm rounded-pill px-3 fw-semibold">Logout</a>
+            {% else %}
+              <a href="{{ url_for('login') }}" class="btn btn-light btn-sm rounded-pill px-3 fw-semibold">Login</a>
+            {% endif %}
+          </div>
+
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  {% block content %}{% endblock %}
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="{{ url_for('static', filename='js/theme.js') }}"></script>
+  {% block extra_js %}{% endblock %}
+</body>
+
+</html>

@@ -1,0 +1,152 @@
+{% extends "base.html"%} {% block title%} Chat Bot {% endblock %} {% block
+extra_css %}
+<link rel="stylesheet" href="../static/css/chatbot.css" />
+{%endblock %}
+{% block favicon %}
+<link rel="icon" type="image/png" href="../static/img/favicon/chat_bot/favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="../static/img/favicon/chat_bot/favicon.svg" />
+<link rel="shortcut icon" href="../static/img/favicon/chat_bot/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="../static/img/favicon/chat_bot/apple-touch-icon.png" />
+<link rel="manifest" href="../static/img/favicon/chat_bot/site.webmanifest" />
+{% endblock favicon %}
+
+{% block content%}
+<div class="chatbot-container">
+
+  <!-- Hero Section -->
+  <div class="chatbot-hero">
+    <h1>💬 Gemini-Powered Health Chatbot</h1>
+    <p>
+      Your AI health companion – ask questions, get instant responses, and learn
+      about possible symptoms and wellness advice.
+    </p>
+  </div>
+
+  <!-- Features -->
+  <div class="chatbot-features">
+    <div class="chatbot-card">
+      <h3>🤖 Gemini AI</h3>
+      <p>Powered by Google’s Gemini for natural conversations.</p>
+    </div>
+    <div class="chatbot-card">
+      <h3>⚡ Instant Replies</h3>
+      <p>Get answers within seconds to your health queries.</p>
+    </div>
+    <div class="chatbot-card">
+      <h3>📚 Knowledgeable</h3>
+      <p>Backed with medical information for better insights.</p>
+    </div>
+    <div class="chatbot-card">
+      <h3>🔒 Privacy</h3>
+      <p>Your chats are secure and never shared.</p>
+    </div>
+  </div>
+
+  <!-- How It Works -->
+  <div class="chatbot-steps">
+    <h2>⚙️ How It Works</h2>
+    <div class="step-list">
+      <div class="step">
+        <span></span>
+        <p>1️⃣ Type your health query in the chatbot</p>
+      </div>
+      <div class="step">
+        <span></span>
+        <p>2️⃣ AI processes and gives an instant response</p>
+      </div>
+      <div class="step">
+        <span></span>
+        <p>3️⃣ Use insights for guidance – consult a doctor if needed</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tips -->
+  <div class="chatbot-tips">
+    <h2>💡 Chatbot Tips</h2>
+    <ul>
+      <li>📝 Be clear and specific in your queries</li>
+      <li>⏳ Ask one question at a time for better results</li>
+      <li>⚕️ Use chatbot for guidance, not medical replacement</li>
+      <li>🌐 Available anytime – your 24/7 health assistant</li>
+    </ul>
+  </div>
+
+  <!-- Disclaimer -->
+  <div class="chatbot-disclaimer">
+    ⚠ <strong>Disclaimer:</strong> This chatbot is for informational purposes
+    only. Always consult a doctor for medical advice.
+  </div>
+
+</div>
+
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+{% for category, msg in messages %}
+<div class="" id="storage_container">
+  <!-- {{ msg }} -->
+
+</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+<div class="chat-wrapper" data-user-id="{{ user.id }}">
+  <div class="chat-header">
+    🩺 AI Doctor Chatbot
+    <a href="{{ url_for('clear_chat') }}?cleared=1" class="btn btn-danger"
+      style="float:right; font-size:14px; padding:2px 6px;">
+      Clear Chat
+    </a>
+  </div>
+
+  <div id="chat-box" class="chat-box">
+    {% for c in history %}
+    <div class="message {{ 'user-message' if c.sender=='user' else 'bot-message' }}">
+      {{ c.message }}
+    </div>
+    {% endfor %}
+  </div>
+
+  <!-- 🌐 Language selector -->
+  <div class="lang-select mb-2 px-2">
+    <label for="language">🌐 Language:</label>
+    <select id="language">
+      <option value="en-US">English</option>
+      <option value="hi-IN">Hindi</option>
+      <option value="mr-IN">Marathi</option>
+    </select>
+    <!-- show which voice is selected / fallback info -->
+    <span id="voice-info" class="ms-3 small text-muted"></span>
+  </div>
+
+  <!-- Chat input -->
+  <div class="chat-input">
+    <input id="user-input" type="text" placeholder="Type your message..." />
+    <button id="send-btn">➤</button>
+    <button id="mic-btn">🎙️</button>
+    <button id="tts-toggle">🔊 On</button>
+  </div>
+</div>
+
+<!-- Toast container -->
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1055">
+  <div id="chatToast" class="toast bg-success text-white" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex">
+      <div class="toast-body" id="toastMessage"></div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+    </div>
+  </div>
+</div>
+
+<script>
+
+</script>
+
+
+
+
+{% endblock %} {% block extra_js %}
+<script src="../static/js/chatbot.js"></script>
+{% endblock %}

@@ -1,0 +1,294 @@
+{% extends "base.html"%} {% block title%} Predict {% endblock %} {% block
+extra_css %}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+  integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous" />
+<link rel="stylesheet" href="../static/css/predict.css" />
+{%endblock %}
+{% block favicon %}
+
+<link rel="icon" type="image/png" href="../static/img/favicon/predict/favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="../static/img/favicon/predict/favicon.svg" />
+<link rel="shortcut icon" href="../static/img/favicon/predict/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="../static/img/favicon/predict/apple-touch-icon.png" />
+<link rel="manifest" href="../static/img/favicon/predict/site.webmanifest" />
+    
+  {% endblock favicon %}
+{% block content%}
+<!-- {% if predicted_disease %}
+
+
+<h1 class="text-center mt-4 my-4">Scroll down to get report</h1>
+
+{% endif %} -->
+
+<!-- Toast Notification -->
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1100">
+  <div id="report-toast" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive"
+    aria-atomic="true">
+    <div class="d-flex">
+      <div class="toast-body">
+        ✅ Report generated! Scroll down to view.
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+        aria-label="Close"></button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Hero Section ===== -->
+<div class="ml-container">
+  <!-- Hero Section -->
+  <div class="hero">
+    <h1>📊 Machine Learning Disease Prediction</h1>
+    <p>
+      Enter your symptoms and let our trained Machine Learning model predict
+      possible diseases. Get instant reports with medications, diet, and
+      precautions.
+    </p>
+  </div>
+
+  <!-- Stats Section -->
+  <div class="stats-container">
+    <div class="stat-card">
+      <h2>⚡ 92%</h2>
+      <p>Model Accuracy (SVC)</p>
+    </div>
+    <div class="stat-card">
+      <h2>40+</h2>
+      <p>Diseases Covered</p>
+    </div>
+    <div class="stat-card">
+      <h2>🔍 Data-Driven</h2>
+      <p>Prediction by ML</p>
+    </div>
+  </div>
+
+  <!-- How It Works -->
+  <div class="steps">
+    <h2>⚙️ How It Works</h2>
+    <div class="step-list">
+      <div class="step">
+        <span>1️⃣</span>
+        <p>Enter your symptoms in the form below</p>
+      </div>
+      <div class="step">
+        <span>2️⃣</span>
+        <p>Our ML model analyzes and predicts the disease</p>
+      </div>
+      <div class="step">
+        <span>3️⃣</span>
+        <p>Download your medical report instantly</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Health Tips -->
+  <div class="tips">
+    <h2>💡 Health Tips</h2>
+    <ul>
+      <li>🥗 Eat a balanced diet rich in fruits and vegetables</li>
+      <li>💧 Stay hydrated by drinking at least 8 glasses of water</li>
+      <li>🏃 Exercise for 30 minutes daily</li>
+      <li>🛌 Get 7–8 hours of quality sleep</li>
+      <li>😌 Reduce stress through meditation or yoga</li>
+    </ul>
+  </div>
+  <div class="ai-disclaimer">
+    ⚠ <strong>Disclaimer:</strong> This tool provides predictions for
+    educational purposes only. Always consult a doctor for medical advice.
+  </div>
+</div>
+
+
+<div class="container ">
+
+
+  <form action="/predict" method="post">
+    <div class="form-group shadow">
+      <h2>🩺 Patient Details</h2>
+      <label class="new_label" for="pName">Patient Name:</label>
+      <input type="text" name="patient_name" placeholder="Enter full name" id="pName" required /><br />
+
+      <label class="new_label" for="pAge">Age:</label>
+      <input type="number" name="patient_age" placeholder="Enter age" id="pAge" required /><br />
+
+      <label class="new_label" for="pGender">Gender:</label>
+      <select name="patient_gender" id="pGender" required>
+        <option value="">--Select--</option>
+        <option value="Male">♂ Male</option>
+        <option value="Female">♀ Female</option>
+        <option value="Other">⚧ Other</option>
+      </select><br />
+      <label for="symptoms" class="new_label">Select Symptoms</label>
+      <div style="
+          max-height: 300px;
+          overflow-y: scroll;
+          border: 1px solid #ccc;
+          padding: 10px;
+          background: white;
+          color: black;
+        ">
+        {% for symptom in symptoms_list %}
+        <div>
+          <input type="checkbox" name="symptoms" value="{{ symptom }}" id="{{ symptom }}" />
+          <label for="{{ symptom }}">{{ symptom }}</label>
+        </div>
+        {% endfor %}
+      </div>
+      {% if message %}
+      <p id="msg" style="color: red">{{ message }}</p>
+      {% endif %}
+      <br />
+      <button class="btn btn-danger">Predict</button>
+    </div>
+  </form>
+</div>
+
+{% if predicted_disease %}
+<!-- In Table -->
+<div class="report-container" id="rep_con">
+  <div id="new_repo">
+    <div class="header">
+      <h1>Medical Diagnosis Report</h1>
+      <p class="report-subtitle">Generated by Disease Prediction System</p>
+      <p>Generated on: {{ report_time }}</p>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Patient Information</div>
+      <table>
+        <tr>
+          <td><strong>Name:</strong></td>
+          <td><span id="pename">{{ name }}</span></td>
+        </tr>
+        <tr>
+          <td><strong>Age:</strong></td>
+          <td>{{ age }}</td>
+        </tr>
+        <tr>
+          <td><strong>Gender:</strong></td>
+          <td>{{ gender }}</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Prediction Result</div>
+      <table>
+        <tr>
+          <td><strong>Disease:</strong></td>
+          <td class="highlight">{{ predicted_disease }}</td>
+        </tr>
+        <tr>
+          <td><strong>Description:</strong></td>
+          <td>
+            <ul>
+              <li>{{ dis_desc }}</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Symptoms:</strong></td>
+          <td>
+            <ul>
+              {% for sym in symptoms %}
+              <li>{{ sym }}</li>
+              {% endfor %}
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Medications:</strong></td>
+          <td>
+            <ul>
+              {% for m in dis_medi %}
+              <li>{{ m }}</li>
+              {% endfor %}
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Precautions:</strong></td>
+          <td>
+            <ul>
+              {% for p in dis_prec %}
+              <li>{{ p }}</li>
+              {% endfor %}
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Diets:</strong></td>
+          <td>
+            <ul>
+              {% for d in dis_diet %}
+              <li>{{ d }}</li>
+              {% endfor %}
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Advice:</strong></td>
+          <td>
+            <ul>
+              {% for w in dis_wrk %}
+              <li>{{ w }}</li>
+              {% endfor %}
+            </ul>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="report-footer">
+      <p class="disclaimer">
+        ⚠ <strong>Disclaimer:</strong> This is an AI-generated prediction and
+        may not be accurate. Please consult a qualified doctor for professional
+        medical advice.
+      </p>
+    </div>
+  </div>
+  <!-- <a href="#" class="print-btn" onclick="window.print()">🖨 Print Report</a> -->
+  <!-- <button type="button" id="printBtn">🖨️ Print Report</button> -->
+
+  <!-- <button type="button" id="printBtn">🖨️ Print Report</button> -->
+
+
+
+
+  <div class="footer">
+    This is a computer-generated report and does not require a signature.<br />
+    © 2025 AI Disease Prediction System
+  </div>
+</div>
+<button type="button" id="pdfBtn">🖨️ Download PDF</button>
+
+<!-- Toast Container -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+  <div id="downloadToast" 
+       class="toast align-items-center text-bg-success border-0" 
+       role="alert" 
+       aria-live="assertive" 
+       aria-atomic="true" 
+       data-bs-autohide="true" 
+       data-bs-delay="3000"> <!-- auto close after 3 sec -->
+    <div class="d-flex">
+      <div class="toast-body">
+        📂 Report downloaded successfully!
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+  </div>
+</div>
+
+<script>
+  
+</script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+<script src="{{ url_for('static', filename='js/predict.js') }}"></script>
+
+{% endif %} {% endblock %} {% block extra_js %}
+
+{% endblock %}

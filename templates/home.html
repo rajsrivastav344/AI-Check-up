@@ -1,0 +1,121 @@
+{% extends "base.html"%} 
+{% block title%} Home {% endblock %} 
+{% block extra_css %}
+<link rel="stylesheet" href="../static/css/home.css">
+ {%endblock %}
+ {% block favicon %}
+    <link rel="icon" type="image/png" href="../static/img/favicon/home/favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="../static/img/favicon/home/favicon.svg" />
+<link rel="shortcut icon" href="../static/img/favicon/home/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="../static/img/favicon/home/apple-touch-icon.png" />
+<link rel="manifest" href="../static/img/favicon/home/site.webmanifest" />
+  {% endblock favicon %}
+{% block content%}
+<!-- Hero Section -->
+ {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+  {% for category, msg in messages %}
+  <div class="alert alert-{{ category }} alert-dismissible fade show rounded-4" id="storage_container" role="alert">
+    {{ msg }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  {% endfor %}
+  {% endif %}
+  {% endwith %}
+<section class="text-center py-5 px-3 fade-in">
+  <h1 class="fw-bold text-primary animate-pop">Your AI-Powered Health Assistant</h1>
+  <p class="lead mt-3">
+    Predict diseases, get AI-driven advice, store reports, and consult with a virtual doctor anytime.
+  </p>
+  <div class="mt-4 d-flex flex-wrap justify-content-center gap-3">
+    <a href="/predict" class="btn btn-primary btn-lg btn-animate">
+      <i class="bi bi-activity"></i> Predict Disease (ML)
+    </a>
+    <a href="/ai_predict" class="btn btn-success btn-lg btn-animate">
+      <i class="bi bi-cpu"></i> AI Disease Prediction
+    </a>
+    <a href="/chatbot" class="btn btn-warning btn-lg btn-animate">
+      <i class="bi bi-robot"></i> Chat with AI Doctor
+    </a>
+    <a href="/dashboard" class="btn btn-info btn-lg btn-animate">
+      <i class="bi bi-folder2-open"></i> My Reports Storage
+    </a>
+  </div>
+</section>
+
+<!-- Feature Section -->
+<section class="container mt-5">
+  <div class="row text-center g-4">
+    <div class="col-md-6 col-lg-3">
+      <div class="card h-100 shadow-sm border-0 rounded-4 hover-up">
+        <div class="card-body">
+          <img src="https://cdn-icons-png.flaticon.com/512/2966/2966486.png" width="50" class="mb-3"/>
+          <h5 class="card-title">ML Disease Prediction</h5>
+          <p class="card-text">Use our trained model to get accurate predictions based on symptoms.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
+      <div class="card h-100 shadow-sm border-0 rounded-4 hover-up">
+        <div class="card-body">
+          <img src="{{ url_for('static', filename='img/robot-assistant.png') }}" width="50" class="mb-3"/>
+          <h5 class="card-title">AI Health Assistant</h5>
+          <p class="card-text">Get smart insights using Google Gemini AI for advanced predictions.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
+      <div class="card h-100 shadow-sm border-0 rounded-4 hover-up">
+        <div class="card-body">
+          <img src="{{ url_for('static', filename='img/health.png') }}" width="50" class="mb-3"/>
+          <h5 class="card-title">Virtual Doctor Chat</h5>
+          <p class="card-text">Talk to our AI-powered chatbot for quick health consultations.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
+      <div class="card h-100 shadow-sm border-0 rounded-4 hover-up">
+        <div class="card-body">
+          <img src="{{ url_for('static', filename='img/cloud-storage.png') }}" width="50" class="mb-3"/>
+          <h5 class="card-title">Medical Report Storage</h5>
+          <p class="card-text">Save, view, and manage your health reports securely in one place.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- How It Works -->
+<section class="container mt-5 text-center fade-in">
+  <h2 class="fw-bold">How It Works</h2>
+  <div class="row mt-4 g-4">
+    <div class="col-6 col-md-3 step-animate">
+      <img src="https://cdn-icons-png.flaticon.com/512/1828/1828817.png" width="60"/>
+      <h6 class="mt-2">Step 1: Enter Symptoms</h6>
+    </div>
+    <div class="col-6 col-md-3 step-animate">
+      <img src="https://cdn-icons-png.flaticon.com/512/1907/1907887.png" width="60"/>
+      <h6 class="mt-2">Step 2: Get Prediction</h6>
+    </div>
+    <div class="col-6 col-md-3 step-animate">
+      <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" width="60"/>
+      <h6 class="mt-2">Step 3: View Advice</h6>
+    </div>
+    <div class="col-6 col-md-3 step-animate">
+      <img src="{{ url_for('static', filename='img/document.png') }}" width="60"/>
+      <h6 class="mt-2">Step 4: Store Reports</h6>
+    </div>
+  </div>
+</section>
+
+<!-- Footer CTA -->
+<section class="text-center my-5 fade-in">
+  <h4 class="fw-bold">Ready to check your health?</h4>
+  <a href="/predict" class="btn btn-primary btn-lg mt-3 btn-animate">
+    <i class="bi bi-heart-pulse"></i> Get Started Now
+  </a>
+</section>
+{% endblock %}
